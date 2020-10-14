@@ -1,0 +1,1 @@
+Función para imprimir un resumen del contenido de un archivo en formato genbank
