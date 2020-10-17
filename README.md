@@ -1,1 +1,2 @@
-Función para imprimir un resumen del contenido de un archivo en formato genbank
+Función para imprimir un resumen del contenido de un archivo en formato genbank que muestra: el nombre del archivo, su ruta, el número de registros, la id de cada registro, su nombre y descripción.
+Para usar la función, se necesita que reciba el nombre de un archivo (con su ruta) y que este sea un archivo en formato GenBank.

@@ -20,7 +20,6 @@ def summarize_contents(archivo):
 
     for i, record in enumerate(SeqIO.parse(archivo, "genbank")):
         print("-id:", record.id)
-        print("position:")
-        for seq_feature in record.features :
-            print('Start: %d, Stop: %d'%(int(seq_feature.location.start), int(seq_feature.location.end)))
+        print("name:", record.name)
+        print("Description:", record.description)
 summarize_contents(archivo)
