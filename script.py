@@ -39,4 +39,4 @@ def summarize_contents(archivo):
     return archiveName,pathName,numRecords,a
 summarize_contents(archivo)
 
-print(summarize_contents(archivo))
+#print(summarize_contents(archivo))
