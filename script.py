@@ -1,4 +1,5 @@
 from Bio import SeqIO 
+from Bio.Seq import Seq
 
 import os
 import unittest
@@ -39,4 +40,19 @@ def summarize_contents(archivo):
     return archiveName,pathName,numRecords,a
 summarize_contents(archivo)
 
-print(summarize_contents(archivo))
+#print(summarize_contents(archivo))
+
+
+#secuencias de ejemplo
+DNA_sequence_1 = "GATCGATGGGCCTATATA"
+DNA_sequence_2 = "GGATCGAAATCGC"
+
+#Función que regresa el complemento inverso de la concatenación
+#de dos secuencias de DNA
+def concatenate_and_get_reverse_of_complement(DNA_sequence_1, DNA_sequence_2):
+    sequence_1 = Seq(DNA_sequence_1)
+    sequence_2 = Seq(DNA_sequence_2)
+    sequence_3 = sequence_1 + sequence_2
+
+    return sequence_3.reverse_complement()
+concatenate_and_get_reverse_of_complement(DNA_sequence_1, DNA_sequence_2)
