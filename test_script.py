@@ -1,5 +1,6 @@
 import unittest
-from script import summarize_contents
+
+from script import *
 
 class TestSummarizeContents(unittest.TestCase):
 
@@ -21,6 +22,35 @@ class TestSummarizeContents(unittest.TestCase):
 
         s = summarize_contents("/home/omar/ejercicio-biopython/data/opuntia.fasta")
         self.assertEqual(('name:opuntia.fasta', 'path:/home/omar/ejercicio-biopython/data/opuntia.fasta', 'num_records: 7 records', ['-id:gi|6273291|gb|AF191665.1|AF191665', 'name:gi|6273291|gb|AF191665.1|AF191665', 'Description:gi|6273291|gb|AF191665.1|AF191665 Opuntia marenae rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', '-id:gi|6273290|gb|AF191664.1|AF191664', 'name:gi|6273290|gb|AF191664.1|AF191664', 'Description:gi|6273290|gb|AF191664.1|AF191664 Opuntia clavata rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', '-id:gi|6273289|gb|AF191663.1|AF191663', 'name:gi|6273289|gb|AF191663.1|AF191663', 'Description:gi|6273289|gb|AF191663.1|AF191663 Opuntia bradtiana rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', '-id:gi|6273287|gb|AF191661.1|AF191661', 'name:gi|6273287|gb|AF191661.1|AF191661', 'Description:gi|6273287|gb|AF191661.1|AF191661 Opuntia kuehnrichiana rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', '-id:gi|6273286|gb|AF191660.1|AF191660', 'name:gi|6273286|gb|AF191660.1|AF191660', 'Description:gi|6273286|gb|AF191660.1|AF191660 Opuntia echinacea rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', '-id:gi|6273285|gb|AF191659.1|AF191659', 'name:gi|6273285|gb|AF191659.1|AF191659', 'Description:gi|6273285|gb|AF191659.1|AF191659 Opuntia pachypus rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence', '-id:gi|6273284|gb|AF191658.1|AF191658', 'name:gi|6273284|gb|AF191658.1|AF191658', 'Description:gi|6273284|gb|AF191658.1|AF191658 Opuntia subulata rpl16 gene; chloroplast gene for chloroplast product, partial intron sequence']),s)
+
+    #Función test para probar la función concatenate_and_get_reverse_of_complement de script.py
+    def test_concatenate_and_get_reverse_of_complement(self):
+        
+        #Al parecer, la función del complemento inverso de biopython funciona bien para cualquier contenido en las cadenas
+        actual = concatenate_and_get_reverse_of_complement(DNA_sequence_1, DNA_sequence_2)
+        self.assertEqual("GCGATTTCGATCCTATATAGGCCCATCGATC", actual)
+
+        actual = concatenate_and_get_reverse_of_complement("Hola", "mundo")
+        self.assertEqual("ohnakuloD",actual)
+
+        actual = concatenate_and_get_reverse_of_complement("@#$%", "^&*()")
+        self.assertEqual(")(*&^%$#@", actual)
+
+        actual = concatenate_and_get_reverse_of_complement("TTgCaAaACtgcACC", "GGCatTtaCcAAT")
+        self.assertEqual("ATTgGtaAatGCCGGTgcaGTtTtGcAA", actual)
+        
+        actual = concatenate_and_get_reverse_of_complement("aa t cccg gactt", "gct ac tgg a")
+        self.assertEqual("t cca gt agcaagtc cggg a tt", actual)
+
+        actual = concatenate_and_get_reverse_of_complement("", "")
+        self.assertEqual("", actual)
+
+        actual = concatenate_and_get_reverse_of_complement("1234","5678")
+        self.assertEqual("87654321", actual)
+
+        self.assertRaises(TypeError, concatenate_and_get_reverse_of_complement,1234, 5678)
+
+        self.assertRaises(TypeError, concatenate_and_get_reverse_of_complement, None, None)
 
 if __name__ == "__main__":
     unittest.main()
