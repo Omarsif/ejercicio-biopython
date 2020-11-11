@@ -3,6 +3,7 @@ from Bio.Seq import Seq
 
 import os
 import unittest
+import numpy
 
 #Archivo de prueba:
 archivo = os.path.abspath("data/AF323668.gbk")
@@ -56,3 +57,25 @@ def concatenate_and_get_reverse_of_complement(DNA_sequence_1, DNA_sequence_2):
 
     return sequence_3.reverse_complement()
 concatenate_and_get_reverse_of_complement(DNA_sequence_1, DNA_sequence_2)
+
+
+#
+#
+DNA_sequence = "GTGAAAAAGATGCAATCTATCGTACTCGCACTTTCCCTGGTTCTGGTCGCTCCCATGGCAGCACAGGCTGCGGAAATTACGTTAGTCCCGTCAGTAAAATTACAGATAGGCGATCGTGATAATCGTGGCTATTACTGGGATGGAGGTCACTGGCGCGACCACGGCTGGTGGAAACAACATTATGAATGGCGAGGCAATCGCTGGCACCTACACGGACCGCCGCCACCGCCGCGCCACCATAAGAAAGCTCCTCATGATCATCACGGCGGTCATGGTCCAGGCAAACATCACCGCTAA"
+def print_protein_and_stop_codon_using_standard_table(DNA_sequence):
+    DNA_sequence_1 = Seq(DNA_sequence)
+    mRNA_sequence = DNA_sequence_1.transcribe()
+    protein_sequence = mRNA_sequence.translate()
+    
+    dictionary = dict()
+    dictionary['mRNA'] = mRNA_sequence
+    if len(DNA_sequence) %3 == 0:
+        dictionary['proteins'] = protein_sequence
+        dictionary['stop_codons'] = []
+        DNA_range = numpy.arange(0, len(DNA_sequence), 3)
+        for i in DNA_range:
+            codon = DNA_sequence[i:i+3]
+            if codon in ('TAA', 'TAG', 'TGA'):
+                dictionary['stop_codons'].append(codon)
+    return dictionary
+print_protein_and_stop_codon_using_standard_table(DNA_sequence)
