@@ -52,7 +52,7 @@ class TestSummarizeContents(unittest.TestCase):
 
         self.assertRaises(TypeError, concatenate_and_get_reverse_of_complement, None, None)
 
-    #Función para probar la función que imprime mRNA, proteínas y codones de paro
+    #Función para probar la función que imprime mRNA, proteínas y codones de paro, usando código estándar
     def test_print_protein_and_stop_codon_using_standard_table(self):
 
         actual = print_protein_and_stop_codon_using_standard_table("")
@@ -73,6 +73,29 @@ class TestSummarizeContents(unittest.TestCase):
         self.assertRaises(TypeError, print_protein_and_stop_codon_using_standard_table, 123456789)
 
         self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "123456789")
+
+
+        #Función para probar la función que imprime mRNA, proteínas y codones de paro, usando código estándar
+        def test_print_proteins_and_codons_using_mitocondrial_yeast_table(self):
+
+            actual = print_protein_and_stop_codon_using_standard_table("")
+            self.assertEqual({'mRNA': Seq('')}, actual)
+
+            actual = print_protein_and_stop_codon_using_standard_table("atttagcaggtttacgaccca")
+            self.assertEqual({'mRNA': Seq('AUUUAGCAGGUUUACGACCCA')}, actual)
+
+            actual = print_protein_and_stop_codon_using_standard_table("atgatttagcaggtttacgaccca")
+            self.assertEqual({'mRNA': Seq('AUGAUUUAGCAGGUUUACGACCCA'), 'proteins': Seq('MI*QVYDP'), 'stop_codons': ['TAG']}, actual)
+
+            self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "GTGAAA AAGA TGCAATC TATCGT ACTCGCA CTT T C CCT")
+
+            self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "@#$%^^*()(*&^%$")
+
+            self.assertRaises(TypeError, print_protein_and_stop_codon_using_standard_table, None)
+
+            self.assertRaises(TypeError, print_protein_and_stop_codon_using_standard_table, 123456789)
+
+            self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "123456789")
 
 
 if __name__ == "__main__":
