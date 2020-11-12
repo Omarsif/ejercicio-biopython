@@ -1,5 +1,5 @@
 import unittest
-
+import Bio
 from script import *
 
 class TestSummarizeContents(unittest.TestCase):
@@ -51,6 +51,29 @@ class TestSummarizeContents(unittest.TestCase):
         self.assertRaises(TypeError, concatenate_and_get_reverse_of_complement,1234, 5678)
 
         self.assertRaises(TypeError, concatenate_and_get_reverse_of_complement, None, None)
+
+    #Función para probar la función que imprime mRNA, proteínas y codones de paro
+    def test_print_protein_and_stop_codon_using_standard_table(self):
+
+        actual = print_protein_and_stop_codon_using_standard_table("")
+        self.assertEqual({'mRNA': Seq('')}, actual)
+
+        actual = print_protein_and_stop_codon_using_standard_table("atttagcaggtttacgaccca")
+        self.assertEqual({'mRNA': Seq('AUUUAGCAGGUUUACGACCCA')}, actual)
+
+        actual = print_protein_and_stop_codon_using_standard_table("atgatttagcaggtttacgaccca")
+        self.assertEqual({'mRNA': Seq('AUGAUUUAGCAGGUUUACGACCCA'), 'proteins': Seq('MI*QVYDP'), 'stop_codons': ['TAG']}, actual)
+
+        self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "GTGAAA AAGA TGCAATC TATCGT ACTCGCA CTT T C CCT")
+
+        self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "@#$%^^*()(*&^%$")
+
+        self.assertRaises(TypeError, print_protein_and_stop_codon_using_standard_table, None)
+
+        self.assertRaises(TypeError, print_protein_and_stop_codon_using_standard_table, 123456789)
+
+        self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "123456789")
+
 
 if __name__ == "__main__":
     unittest.main()
