@@ -60,7 +60,7 @@ concatenate_and_get_reverse_of_complement(DNA_sequence_1, DNA_sequence_2)
 
 
 
-#Función que regresa un diccionario que incluye mRNA, secuencia de proteina y codones de paro
+#Función que regresa un diccionario que incluye mRNA, secuencia de proteina y codones de paro usando código estándar
 DNA_sequence = "GTGAAAAAGATGCAATCTATCGTACTCGCACTTTCCCTGGTTCTGGTCGCTCCCATGGCAGCACAGGCTGCGGAAATTACGTTAGTCCCGTCAGTAAAATTACAGATAGGCGATCGTGATAATCGTGGCTATTACTGGGATGGAGGTCACTGGCGCGACCACGGCTGGTGGAAACAACATTATGAATGGCGAGGCAATCGCTGGCACCTACACGGACCGCCGCCACCGCCGCGCCACCATAAGAAAGCTCCTCATGATCATCACGGCGGTCATGGTCCAGGCAAACATCACCGCTAA"
 
 def print_protein_and_stop_codon_using_standard_table(DNA_sequence):
@@ -71,7 +71,7 @@ def print_protein_and_stop_codon_using_standard_table(DNA_sequence):
     dictionary = dict()
     dictionary['mRNA'] = mRNA_sequence.upper()
     DNA_sequence = DNA_sequence.upper()
-    if len(DNA_sequence) %3 == 0 and DNA_sequence.find("ATG") >= 0:
+    if len(DNA_sequence) %3 == 0 and ((DNA_sequence.find('ATG') >= 0) or (DNA_sequence.find('CTG') >= 0) or (DNA_sequence.find('TTG') >= 0)):
         dictionary['proteins'] = protein_sequence
         dictionary['stop_codons'] = []
         DNA_range = numpy.arange(0, len(DNA_sequence), 3)
@@ -81,3 +81,24 @@ def print_protein_and_stop_codon_using_standard_table(DNA_sequence):
                 dictionary['stop_codons'].append(codon)
     return dictionary
 print_protein_and_stop_codon_using_standard_table(DNA_sequence)
+
+#Función que regresa un diccionario que incluye mRNA, secuencia de proteina y codones de paro usando código mitocondrial de la levadura
+def print_proteins_and_codons_using_mitocondrial_yeast_table(DNA_sequence):
+    DNA_sequence_1 = Seq(DNA_sequence)
+    mRNA_sequence = DNA_sequence_1.transcribe()
+    protein_sequence = mRNA_sequence.translate()
+    
+    dictionary = dict()
+    dictionary['mRNA'] = mRNA_sequence.upper()
+    DNA_sequence = DNA_sequence.upper()
+    if len(DNA_sequence) %3 == 0 and ((DNA_sequence.find('ATG') >= 0) or (DNA_sequence.find('ATA') >= 0) or (DNA_sequence.find('GTG') >= 0)):
+        dictionary['proteins'] = protein_sequence
+        dictionary['stop_codons'] = []
+        DNA_range = numpy.arange(0, len(DNA_sequence), 3)
+        for i in DNA_range:
+            codon = DNA_sequence[i:i+3]
+            if codon in ('TAA', 'TAG'):
+                dictionary['stop_codons'].append(codon)
+    print (dictionary)
+    return dictionary
+print_proteins_and_codons_using_mitocondrial_yeast_table(DNA_sequence)
