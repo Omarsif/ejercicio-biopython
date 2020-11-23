@@ -27,7 +27,7 @@ def summarize_contents(archivo):
 
     records = list(SeqIO.parse(archivo, tipo))
     numRecords = ("num_records: %i records" % len(records))
-    
+
     #lista para guardar los datos de cada iteración
     a = []
     for i, record in enumerate(SeqIO.parse(archivo, tipo)):
@@ -99,6 +99,17 @@ def print_proteins_and_codons_using_mitocondrial_yeast_table(DNA_sequence):
             codon = DNA_sequence[i:i+3]
             if codon in ('TAA', 'TAG'):
                 dictionary['stop_codons'].append(codon)
-    print (dictionary)
     return dictionary
 print_proteins_and_codons_using_mitocondrial_yeast_table(DNA_sequence)
+
+
+#Función que lee un archivo en formato fasta y 
+# extrae sus secuencias en archivos individuales
+archivo_fasta = os.path.abspath("data/sequences.fasta")
+def extract_sequences(archivo_fasta):
+    
+    records = list(SeqIO.parse(archivo_fasta, "fasta"))
+    for i, sequence in enumerate(records, start=1):
+       SeqIO.write(sequence, os.path.abspath("data/sequence%i.fasta" %i), "fasta")
+
+extract_sequences(archivo_fasta)
