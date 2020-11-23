@@ -97,6 +97,14 @@ class TestSummarizeContents(unittest.TestCase):
 
             self.assertRaises(Bio.Data.CodonTable.TranslationError, print_protein_and_stop_codon_using_standard_table, "123456789")
 
+        
+        #Función para probar que el primer archivo generado tiene el 
+        #contenido del primer record del archivo original
+        def test_extract_sequences(self):
+
+            actual = SeqIO.read("sequence1.fasta", "fasta")   
+            self.assertEqual(actual, next(SeqIO.parse("sequences.fasta", "fasta")))
+
 
 if __name__ == "__main__":
     unittest.main()
