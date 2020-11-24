@@ -104,12 +104,14 @@ print_proteins_and_codons_using_mitocondrial_yeast_table(DNA_sequence)
 
 
 #Función que lee un archivo en formato fasta y 
-# extrae sus secuencias en archivos individuales
+# extrae sus secuencias en archivos individuales en formato genbank
 archivo_fasta = os.path.abspath("data/sequences.fasta")
-def extract_sequences(archivo_fasta):
+formato = "genbank"
+def extract_sequences(archivo_fasta, formato):
     
-    records = list(SeqIO.parse(archivo_fasta, "fasta"))
-    for i, sequence in enumerate(records, start=1):
-       SeqIO.write(sequence, os.path.abspath("data/sequence%i.fasta" %i), "fasta")
-
-extract_sequences(archivo_fasta)
+    records = SeqIO.parse(archivo_fasta, "fasta")
+    for s, sequence in enumerate(records, start=1):
+       sequence.annotations["molecule_type"] = " "
+       SeqIO.write(sequence, os.path.abspath("data/sequence%s.gbk" %s), formato)
+       
+extract_sequences(archivo_fasta, formato)
