@@ -115,3 +115,16 @@ def extract_sequences(archivo_fasta, formato):
        SeqIO.write(sequence, os.path.abspath("data/sequence%s.gbk" %s), formato)
        
 extract_sequences(archivo_fasta, formato)
+
+
+#Función que dado un archivo FASTA, obtiene otro archivo FASTA donde cada 
+#secuencia es el complemento inverso
+def extract_sequences_revcom(archivo_fasta):
+
+   # records = list(SeqIO.parse(archivo_fasta, "fasta"))
+
+    records = (rec.reverse_complement(id="rc_"+rec.id, description = "reverse complement") for rec in SeqIO.parse(archivo_fasta, "fasta"))
+    #for sequence in records:
+    SeqIO.write(records, os.path.abspath("data/reverse_complement_sequences.fasta"), "fasta")
+
+extract_sequences_revcom(archivo_fasta)
